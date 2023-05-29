@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /*background-image: url('./images/backgroundMoviesPic.jpg');*/
+  background-color: black !important;
   background-size: cover;
   background-repeat: no-repeat
 }
@@ -16,10 +16,17 @@ code {
 }
 
 .navbar {
-  background-color: #f0f0f0;
+  /*background-color: black;*/
+  color: white;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   padding: 10px;
+}
+
+.navbar-custom {
+  /*background-color: black;*/
+  color: white;
+  /* Add any other custom styles for the navbar */
 }
