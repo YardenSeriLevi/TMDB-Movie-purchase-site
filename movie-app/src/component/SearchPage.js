@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { Container, Row, Col, Form, Button, Alert, Card, Dropdown } from 'react-bootstrap';
+import {Container, Row, Col, Form, Button, Alert, Card, Dropdown} from 'react-bootstrap';
 import GenreDropdown from "./GenreDropdown ";
 import MovieItem from "./MovieItem";
+import '..//index.css'; // Import the CSS file
 
 const API_KEY = '13f7a88e55dd111b7d108658b6b6216a';
 const GENRE_API_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
@@ -44,7 +45,6 @@ const SearchPage = () => {
     };
 
     const handleHistoryItemClick = (item) => {
-        console.log("in handleHistoryItemClick");
         setSearchQuery(item.query);
     };
 
@@ -66,18 +66,23 @@ const SearchPage = () => {
         setIsError(false);
 
         try {
-            let apiUrl ;
+            let apiUrl;
 
             if (genreId) {
-                console.log("in if id = "+genreId);
                 // Search by genre
                 apiUrl = `${SEARCH_BY_GENRE}&with_genres=${genreId}`;
-                // apiUrl += `&with_genres=${genreId}`;
             } else if (searchQuery) {
                 // Search by movie name or actor
                 apiUrl = `${GENERAL_SEARCH_API_URL}&query=${encodeURIComponent(searchQuery)}`;
-                const newSearchHistory = [{ id: Date.now(), query: searchQuery }, ...searchHistory];
-                setSearchHistory(newSearchHistory);
+                const newSearchHistoryItem = {id: Date.now(), query: searchQuery};
+
+                // Check if the search query already exists in the search history
+                const isDuplicateSearch = searchHistory.some((item) => item.query === searchQuery);
+
+                if (!isDuplicateSearch) {
+                    const newSearchHistory = [newSearchHistoryItem, ...searchHistory];
+                    setSearchHistory(newSearchHistory);
+                }
             }
 
             const response = await axios.get(apiUrl);
@@ -89,6 +94,7 @@ const SearchPage = () => {
 
         setIsLoading(false);
     };
+
 
     const handleAddToBag = (movie) => {
         setShoppingBag((prevBag) => [...prevBag, movie]);
@@ -108,19 +114,23 @@ const SearchPage = () => {
                             onBlur={handleMouseLeave} // Use onBlur instead of onMouseLeave
                         />
                         {searchHistory.length > 0 && (
-                            <ul className="search-history">
-                                {searchHistory.map((item) => (
-                                    <li key={item.id} onClick={() => handleHistoryItemClick(item)}>
-                                        {item.query}
-                                        <span
-                                            className="delete-button"
-                                            onClick={() => handleDeleteSearchHistoryItem(item.id)}
-                                        >
-                      X
-                    </span>
-                                    </li>
-                                ))}
-                            </ul>
+                            <div className="bg-gray p-1 custom-gray-div col-3">
+                                <ul className="search-history">
+                                    {searchHistory.map((item) => (
+                                        <li className="sub-menu-item col-9" role="none">
+                                            {/*<a className="sub-menu-link text-white" onClick={() => handleHistoryItemClick(item)}>*/}
+                                            {/*    {item.query}*/}
+                                            {/*</a>*/}
+                                            <button className="btn btn-link " onClick={() => handleHistoryItemClick(item)}>
+                                                {item.query}
+                                            </button>
+                                            <button className="btn btn-link col-3 " onClick={() => handleDeleteSearchHistoryItem(item.id)}>
+                                                X
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         )}
                     </Col>
                     <Col sm={3}>
@@ -128,17 +138,8 @@ const SearchPage = () => {
                     </Col>
                 </Form.Group>
             </Form>
-            {/*{showSearchHistory && (*/}
-            {/*    <ul>*/}
-            {/*        {searchHistory.map((item, index) => (*/}
-            {/*            <li key={index}>*/}
-            {/*                <button onClick={() => handleSearchHistoryItemClick(item)}>{item}</button>*/}
-            {/*                <button onClick={() => handleDeleteSearchHistoryItem(index)}>Delete</button>*/}
-            {/*            </li>*/}
-            {/*        ))}*/}
-            {/*    </ul>*/}
-            {/*)}*/}
-            <GenreDropdown genres={genres} handleGenreClick={handleSearch} />
+
+            <GenreDropdown genres={genres} handleGenreClick={handleSearch}/>
 
             {isError && <Alert variant="danger">Error occurred while searching.</Alert>}
 
@@ -148,7 +149,7 @@ const SearchPage = () => {
                 <Row>
                     {searchResults.map((result) => (
                         <Col key={result.id} sm={4} className="mb-4">
-                            <MovieItem movie={result} />
+                            <MovieItem movie={result}/>
                         </Col>
                     ))}
                 </Row>
@@ -165,3 +166,4 @@ const SearchPage = () => {
 };
 
 export default SearchPage;
+

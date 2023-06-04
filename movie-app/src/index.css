@@ -30,3 +30,10 @@ code {
   color: white;
   /* Add any other custom styles for the navbar */
 }
+.custom-gray-div {
+  background-color: gray;
+}
+
+.white-text {
+  color: white;
+}
