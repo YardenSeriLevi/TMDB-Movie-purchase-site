@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Container, Row, Col, Form, Button, Alert, Card, Dropdown} from 'react-bootstrap';
 import GenreDropdown from "./GenreDropdown ";
-import MovieItem from "./MovieItem";
+import MovieItems from "./MovieItem";
 import '..//index.css'; // Import the CSS file
 
 const API_KEY = '13f7a88e55dd111b7d108658b6b6216a';
@@ -147,9 +147,10 @@ const SearchPage = () => {
                 <div>Loading...</div>
             ) : (
                 <Row>
+
                     {searchResults.map((result) => (
                         <Col key={result.id} sm={4} className="mb-4">
-                            <MovieItem movie={result}/>
+                            <MovieItems movie={result}/>
                         </Col>
                     ))}
                 </Row>
