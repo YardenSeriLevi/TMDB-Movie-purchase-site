@@ -18,12 +18,13 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public void addToCart(@RequestBody Movie movie) {
-         System.out.println("hhhhh yarden");
-         cart.addMovie(movie);
+    public void addToCart(@RequestBody Movie movieDetails) {
+        Movie movie = new Movie(movieDetails.getId(),movieDetails.getTitle(),movieDetails.getPrice(),movieDetails.getImageUrl());
+        cart.addMovie(movie);
     }
     @GetMapping("/items")
     public List<Movie> getCartItems() {
+        System.out.println("in get");
         return cart.getMovies();
     }
 

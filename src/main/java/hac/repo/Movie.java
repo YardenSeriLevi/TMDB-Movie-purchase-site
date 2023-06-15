@@ -13,11 +13,12 @@ public class Movie {
         // Default constructor
     }
 
-    public Movie(long id, String title, double price, String imageUrl) {
+    public Movie(long id, String title, double price, String poster_path) {
         this.id = id;
         this.title = title;
         this.price = price;
-        this.imageUrl = imageUrl;
+        this.imageUrl = poster_path;
+
     }
 
     // Getters and Setters

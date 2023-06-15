@@ -5,12 +5,19 @@ const MovieComponent = ({ movie }) => {
     const [isAddedToCart, setIsAddedToCart] = useState(false);
 
     const handleAddToCart = () => {
+        const movieDetails = {
+            id: movie.id,
+            title: movie.title || movie.name,
+            imageUrl: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+            price: 3.99,
+        };
+
         fetch('/cart/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(movie),
+            body: JSON.stringify(movieDetails),
         })
             .then(response => {
                 // Handle the response

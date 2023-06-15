@@ -24,6 +24,11 @@ public class Cart implements Serializable {
         if (!movies.contains(movie)) {
             movies.add(movie);
         }
+        System.out.println("id =  " + movie.getId());
+        System.out.println("title =  " + movie.getTitle());
+        System.out.println("price =  " + movie.getPrice());
+        System.out.println("url =  " + movie.getImageUrl());
+
     }
     public void removeMovie(Movie movie) {
         movies.remove(movie);
