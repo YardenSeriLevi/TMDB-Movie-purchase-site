@@ -73,11 +73,14 @@ const UseShoppingCart = () => {
     };
 
     return (
-        <section className="h-100 h-custom" style={{backgroundColor: "#eee"}}>
+        <section className="h-100 h-custom" style={{backgroundColor: "#eee", minHeight: '100%'}}>
             <MDBContainer className="py-5 h-100">
                 <MDBRow className="justify-content-center align-items-center h-100">
                     <MDBCol size="12">
-                        <MDBCard className="card-registration card-registration-2" style={{borderRadius: "15px"}}>
+                        <MDBCard
+                            className="card-registration card-registration-2"
+                            style={{borderRadius: "15px"}}
+                        >
                             <MDBCardBody className="p-0">
                                 <MDBRow className="g-0">
                                     <MDBCol lg="8">
@@ -88,16 +91,14 @@ const UseShoppingCart = () => {
                                             <MDBTypography className="mb-0 text-muted">
                                                 {movies.length} items
                                             </MDBTypography>
-                                            <div className="d-flex justify-content-between align-items-center mb-5">
-                                            </div>
 
                                             {movies.map(movie => (
                                                 <MDBRow
                                                     className="mb-4 d-flex justify-content-between align-items-center"
                                                     key={movie.id}
                                                 >
-                                                    <hr className="my-4" />
-                                                    <MDBCol md="2" lg="2" xl="2">
+                                                    <hr className="my-4"/>
+                                                    <MDBCol md="2">
                                                         <MDBCardImage
                                                             src={movie.imageUrl}
                                                             fluid
@@ -105,23 +106,38 @@ const UseShoppingCart = () => {
                                                             alt="Cotton T-shirt"
                                                         />
                                                     </MDBCol>
-                                                    <MDBCol md="3" lg="3" xl="3">
+                                                    <MDBCol md="10" lg="10" xl="10">
                                                         <MDBTypography tag="h6" className="text-muted">
-                                                            Movie
+                                                            Movie:
                                                         </MDBTypography>
                                                         <MDBTypography tag="h6" className="text-black mb-0">
                                                             {movie.title}
                                                         </MDBTypography>
-                                                        <MDBTypography tag="p" className="text-muted">
-                                                            Release Date: {movie.releaseDate}
+
+                                                        <MDBTypography tag="h6" className="text-muted">
+                                                            Release Date:
                                                         </MDBTypography>
+                                                        <MDBTypography tag="h6" className="text-black mb-0">
+                                                            {movie.releaseDate}
+                                                        </MDBTypography>
+
+                                                        <MDBTypography tag="h6" className="text-muted">
+                                                            Price:
+                                                        </MDBTypography>
+                                                        <MDBTypography tag="h6" className="text-black mb-0">
+                                                            $ {movie.price}
+                                                        </MDBTypography>
+
+                                                        <MDBBtn
+                                                            color="link"
+                                                            onClick={() => handleDeleteMovie(movie.id)}
+                                                        >
+                                                            <FaTrashAlt size={16}/>
+                                                        </MDBBtn>
+                                                        {movie.errorMessage && (
+                                                            <div className="text-danger">{movie.errorMessage}</div>
+                                                        )}
                                                     </MDBCol>
-                                                    <MDBBtn color="link" onClick={() => handleDeleteMovie(movie.id)}>
-                                                        <FaTrashAlt size={16} />
-                                                    </MDBBtn>
-                                                    {movie.errorMessage && (
-                                                        <div className="text-danger">{movie.errorMessage}</div>
-                                                    )}
                                                 </MDBRow>
                                             ))}
 
@@ -141,10 +157,11 @@ const UseShoppingCart = () => {
                                             </div>
                                             <div className="pt-5">
                                                 <MDBTypography tag="h6" className="mb-0">
-                                                    <Link to="/Search" className="text-body">Back to shop</Link>
+                                                    <Link to="/Search" className="text-body">
+                                                        Back to shop
+                                                    </Link>
                                                 </MDBTypography>
                                             </div>
-
                                         </div>
                                     </MDBCol>
                                     <MDBCol lg="4" className="bg-grey">
@@ -153,41 +170,38 @@ const UseShoppingCart = () => {
                                                 Summary
                                             </MDBTypography>
 
-                                            <hr className="my-4"/>
+                                            <hr className="my-4" />
 
                                             <div className="d-flex justify-content-between mb-4">
                                                 <MDBTypography tag="h5" className="text-uppercase">
-                                                    {movies.length} items
+                                                    Items
                                                 </MDBTypography>
-                                                <MDBTypography tag="h5">${calculateTotalSum()}</MDBTypography>
+                                                <MDBTypography tag="h5">{movies.length}</MDBTypography>
                                             </div>
 
-                                            <hr className="my-4"/>
+                                            <hr className="my-4" />
 
                                             <div className="d-flex justify-content-between mb-5">
                                                 <MDBTypography tag="h5" className="text-uppercase">
-                                                    Total price
+                                                    Total Price
                                                 </MDBTypography>
                                                 <MDBTypography tag="h5">$ {calculateTotalSum()}</MDBTypography>
                                             </div>
 
-                                            <MDBBtn color="dark" block size="lg">
-                                                Register
-                                            </MDBBtn>
+                                            <Link to="/checkout" className="btn btn-primary btn-lg w-100">
+                                                Checkout
+                                            </Link>
                                         </div>
-
                                     </MDBCol>
-
                                 </MDBRow>
                             </MDBCardBody>
                         </MDBCard>
                     </MDBCol>
-
                 </MDBRow>
             </MDBContainer>
         </section>
-
     );
+
 };
 export default UseShoppingCart;
 

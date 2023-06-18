@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import {Card} from "react-bootstrap";
+import {MDBBtn, MDBCardImage, MDBCol, MDBRow, MDBTypography} from "mdb-react-ui-kit";
+import {FaTrashAlt} from "react-icons/fa";
 
 const MovieComponent = ({ movie }) => {
     const [isAddedToCart, setIsAddedToCart] = useState(false);
@@ -56,6 +58,41 @@ const MovieComponent = ({ movie }) => {
                 </Card.Body>
             </Card>
         </div>
+        // <MDBRow
+        //     className="mb-4 d-flex justify-content-between align-items-center"
+        //     key={movie.id}
+        // >
+        //     <MDBCol md="2">
+        //         <MDBCardImage
+        //             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+        //             fluid
+        //             className="rounded-3"
+        //         />
+        //     </MDBCol>
+        //     <MDBCol md="10" lg="10" xl="10">
+        //         <MDBTypography tag="h6" className="text-muted">
+        //             Movie:
+        //         </MDBTypography>
+        //         <MDBTypography tag="h6" className="text-black mb-0">
+        //             {movie.title}
+        //         </MDBTypography>
+        //
+        //         <MDBTypography tag="h6" className="text-muted">
+        //             Release Date:
+        //         </MDBTypography>
+        //         <MDBTypography tag="h6" className="text-black mb-0">
+        //             {movie.releaseDate}
+        //         </MDBTypography>
+        //
+        //         <MDBTypography tag="h6" className="text-muted">
+        //             Price:
+        //         </MDBTypography>
+        //         <MDBTypography tag="h6" className="text-black mb-0">
+        //             $ {movie.price}
+        //         </MDBTypography>
+        //
+        //     </MDBCol>
+        // </MDBRow>
     );
 };
 
