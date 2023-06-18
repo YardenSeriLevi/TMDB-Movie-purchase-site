@@ -38,4 +38,7 @@ code {
   color: white;
 }
 
+.clear-button {
+  height: 48px; /* Adjust the height value as needed */
+}
 

@@ -19,7 +19,8 @@ public class CartController {
 
     @PostMapping("/add")
     public void addToCart(@RequestBody Movie movieDetails) {
-        Movie movie = new Movie(movieDetails.getId(),movieDetails.getTitle(),movieDetails.getPrice(),movieDetails.getImageUrl());
+        Movie movie = new Movie(movieDetails.getId(),movieDetails.getTitle(),movieDetails.getPrice(),movieDetails.getImageUrl(),
+                movieDetails.getReleaseDate());
         cart.addMovie(movie);
     }
     @GetMapping("/items")
@@ -28,8 +29,8 @@ public class CartController {
         return cart.getMovies();
     }
 
-    @DeleteMapping("/delete/{movieId}")
-    public void deleteCartItem(@PathVariable("movieId") int movieId) {
+    @RequestMapping(value = "/delete/{movieId}", method = RequestMethod.DELETE)
+    public void deleteCartItem(@PathVariable("movieId") long movieId) {
         // Find and remove the movie from the cart based on the movieId
         Movie movieToRemove = null;
         for (Movie movie : cart.getMovies()) {

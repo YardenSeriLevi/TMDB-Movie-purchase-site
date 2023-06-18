@@ -1,6 +1,5 @@
 package hac.repo;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 public class Movie {
@@ -9,15 +8,18 @@ public class Movie {
     private double price;
     private String imageUrl;
 
+    private String releaseDate;
+
     public Movie() {
         // Default constructor
     }
 
-    public Movie(long id, String title, double price, String poster_path) {
+    public Movie(long id, String title, double price, String poster_path,String releaseDate) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.imageUrl = poster_path;
+        this.releaseDate = releaseDate;
 
     }
 
@@ -54,6 +56,12 @@ public class Movie {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String  getReleaseDate() { return releaseDate;}
 
     @Override
     public boolean equals(Object o) {

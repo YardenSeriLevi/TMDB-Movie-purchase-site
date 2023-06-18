@@ -10,11 +10,14 @@ import {
     MDBRow, MDBTooltip,
     MDBTypography
 } from "mdb-react-ui-kit";
-import { MDBIcon } from "mdb-react-ui-kit";
+import {MDBIcon} from "mdb-react-ui-kit";
+
 import {Link} from "react-router-dom";
+import {FaTrashAlt} from 'react-icons/fa';
 
 const UseShoppingCart = () => {
     const [movies, setMovies] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         async function getMovies() {
@@ -29,9 +32,44 @@ const UseShoppingCart = () => {
 
         getMovies();
     }, []);
-    const handleDeleteMovie = (movieId) => {
-        // Implement the logic to delete the movie with the given movieId
-        console.log("Delete movie with ID:", movieId);
+    const handleDeleteMovie = async (movieId) => {
+        try {
+            await axios.delete(`/cart/delete/${movieId}`);
+            console.log("Movie deleted successfully");
+            // Perform any additional actions after successful deletion
+            // Update the list of movies
+            const updatedMovies = movies.filter(movie => movie.id !== movieId);
+            setMovies(updatedMovies);
+        } catch (error) {
+            console.log("Error deleting movie:", error);
+            // Handle error cases
+            // Find the movie with the matching movieId
+            const errorMovie = movies.find(movie => movie.id === movieId);
+            // Update the error message for that movie
+            errorMovie.errorMessage = "The deletion operation could not be completed at the moment. Please try again later."
+            setMovies([...movies]);
+        }
+    };
+    const calculateTotalSum = () => {
+        let total = 0;
+        movies.forEach((movie) => {
+            total += movie.price;
+        });
+        return total;
+
+    };
+
+    const handleClearCart = async () => {
+        try {
+            await axios.delete('/cart/clear');
+            console.log("Cart cleared successfully");
+            // Update the list of movies to an empty array
+            setMovies([]);
+        } catch (error) {
+            console.log("Error clearing cart:", error);
+            // Handle error cases
+            setError("Failed to clear the cart. Please try again later.");
+        }
     };
 
     return (
@@ -55,12 +93,17 @@ const UseShoppingCart = () => {
 
                                             {movies.map(movie => (
                                                 <MDBRow
-                                                    className="mb-4 d-flex justify-content-between align-items-center">
-                                                    <hr className="my-4"/>
+                                                    className="mb-4 d-flex justify-content-between align-items-center"
+                                                    key={movie.id}
+                                                >
+                                                    <hr className="my-4" />
                                                     <MDBCol md="2" lg="2" xl="2">
                                                         <MDBCardImage
                                                             src={movie.imageUrl}
-                                                            fluid className="rounded-3" alt="Cotton T-shirt"/>
+                                                            fluid
+                                                            className="rounded-3"
+                                                            alt="Cotton T-shirt"
+                                                        />
                                                     </MDBCol>
                                                     <MDBCol md="3" lg="3" xl="3">
                                                         <MDBTypography tag="h6" className="text-muted">
@@ -69,29 +112,40 @@ const UseShoppingCart = () => {
                                                         <MDBTypography tag="h6" className="text-black mb-0">
                                                             {movie.title}
                                                         </MDBTypography>
-                                                    </MDBCol>
-                                                    <MDBCol md="3" lg="2" xl="2" className="text-end">
-                                                        <MDBTypography tag="h6" className="mb-0">
-                                                            $ {movie.price}
+                                                        <MDBTypography tag="p" className="text-muted">
+                                                            Release Date: {movie.releaseDate}
                                                         </MDBTypography>
-                                                        <a href="#!" className="float-end text-black" onClick={() => handleDeleteMovie(movie.id)}>
-                                                            <MDBIcon fas icon="times" />
-                                                        </a>
                                                     </MDBCol>
-
+                                                    <MDBBtn color="link" onClick={() => handleDeleteMovie(movie.id)}>
+                                                        <FaTrashAlt size={16} />
+                                                    </MDBBtn>
+                                                    {movie.errorMessage && (
+                                                        <div className="text-danger">{movie.errorMessage}</div>
+                                                    )}
                                                 </MDBRow>
                                             ))}
+
                                             <hr className="my-4"/>
+                                            <div className="pt-5">
+                                                {error && <div className="text-danger">{error}</div>}
+                                                {movies.length > 0 && (
+                                                    <MDBBtn
+                                                        color="danger"
+                                                        onClick={handleClearCart}
+                                                        size="lg"
+                                                        className="clear-button"
+                                                    >
+                                                        Clear Cart
+                                                    </MDBBtn>
+                                                )}
+                                            </div>
                                             <div className="pt-5">
                                                 <MDBTypography tag="h6" className="mb-0">
                                                     <Link to="/Search" className="text-body">Back to shop</Link>
                                                 </MDBTypography>
                                             </div>
+
                                         </div>
-
-                                        <MDBRow>
-
-                                        </MDBRow>
                                     </MDBCol>
                                     <MDBCol lg="4" className="bg-grey">
                                         <div className="p-5">
@@ -105,7 +159,7 @@ const UseShoppingCart = () => {
                                                 <MDBTypography tag="h5" className="text-uppercase">
                                                     {movies.length} items
                                                 </MDBTypography>
-                                                <MDBTypography tag="h5">€ 132.00</MDBTypography>
+                                                <MDBTypography tag="h5">${calculateTotalSum()}</MDBTypography>
                                             </div>
 
                                             <hr className="my-4"/>
@@ -114,7 +168,7 @@ const UseShoppingCart = () => {
                                                 <MDBTypography tag="h5" className="text-uppercase">
                                                     Total price
                                                 </MDBTypography>
-                                                <MDBTypography tag="h5">€ 137.00</MDBTypography>
+                                                <MDBTypography tag="h5">$ {calculateTotalSum()}</MDBTypography>
                                             </div>
 
                                             <MDBBtn color="dark" block size="lg">

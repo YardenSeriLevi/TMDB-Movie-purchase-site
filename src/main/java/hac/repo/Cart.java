@@ -28,6 +28,7 @@ public class Cart implements Serializable {
         System.out.println("title =  " + movie.getTitle());
         System.out.println("price =  " + movie.getPrice());
         System.out.println("url =  " + movie.getImageUrl());
+        System.out.println("Release Date: =  " + movie.getReleaseDate());
 
     }
     public void removeMovie(Movie movie) {

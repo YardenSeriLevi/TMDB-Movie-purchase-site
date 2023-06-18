@@ -9,6 +9,7 @@ const MovieComponent = ({ movie }) => {
             id: movie.id,
             title: movie.title || movie.name,
             imageUrl: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+            releaseDate :movie.release_date,
             price: 3.99,
         };
 
