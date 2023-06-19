@@ -101,7 +101,7 @@ const SearchPage = () => {
     };
 
     return (
-        <Container>
+        <>
             <Form onSubmit={handleSearch}>
                 <Form.Group as={Row} controlId="formSearch">
                     <Col sm={9}>
@@ -121,10 +121,12 @@ const SearchPage = () => {
                                             {/*<a className="sub-menu-link text-white" onClick={() => handleHistoryItemClick(item)}>*/}
                                             {/*    {item.query}*/}
                                             {/*</a>*/}
-                                            <button className="btn btn-link " onClick={() => handleHistoryItemClick(item)}>
+                                            <button className="btn btn-link "
+                                                    onClick={() => handleHistoryItemClick(item)}>
                                                 {item.query}
                                             </button>
-                                            <button className="btn btn-link col-3 " onClick={() => handleDeleteSearchHistoryItem(item.id)}>
+                                            <button className="btn btn-link col-3 "
+                                                    onClick={() => handleDeleteSearchHistoryItem(item.id)}>
                                                 X
                                             </button>
                                         </li>
@@ -162,7 +164,7 @@ const SearchPage = () => {
                     <li key={movie.id}>{movie.title || movie.name}</li>
                 ))}
             </ul>
-        </Container>
+        </>
     );
 };
 

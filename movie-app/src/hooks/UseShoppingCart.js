@@ -11,27 +11,18 @@ import {
     MDBTypography
 } from "mdb-react-ui-kit";
 import {MDBIcon} from "mdb-react-ui-kit";
+import fetchMovies from './fetchMovies';
 
 import {Link} from "react-router-dom";
 import {FaTrashAlt} from 'react-icons/fa';
+import MovieTotal from "../component/TotalPrice";
 
 const UseShoppingCart = () => {
     const [movies, setMovies] = useState([]);
     const [error, setError] = useState(null);
+    const [empty, setEmpty] = useState("Your cart is empty. Start adding items to your cart to proceed with your purchase.");
 
-    useEffect(() => {
-        async function getMovies() {
-            try {
-                const result = await axios.get('/cart/items');
-                setMovies(result.data);
-                console.log("res =", result);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-        getMovies();
-    }, []);
+    fetchMovies(setMovies);
     const handleDeleteMovie = async (movieId) => {
         try {
             await axios.delete(`/cart/delete/${movieId}`);
@@ -50,14 +41,7 @@ const UseShoppingCart = () => {
             setMovies([...movies]);
         }
     };
-    const calculateTotalSum = () => {
-        let total = 0;
-        movies.forEach((movie) => {
-            total += movie.price;
-        });
-        return total;
 
-    };
 
     const handleClearCart = async () => {
         try {
@@ -73,8 +57,7 @@ const UseShoppingCart = () => {
     };
 
     return (
-        <section className="h-100 h-custom" style={{backgroundColor: "#eee", minHeight: '100%'}}>
-            <MDBContainer className="py-5 h-100">
+
                 <MDBRow className="justify-content-center align-items-center h-100">
                     <MDBCol size="12">
                         <MDBCard
@@ -155,6 +138,11 @@ const UseShoppingCart = () => {
                                                     </MDBBtn>
                                                 )}
                                             </div>
+                                            {!movies.length > 0 && (
+                                                <MDBTypography tag="h4" className="text-danger">
+                                                    {empty}
+                                                </MDBTypography>
+                                            )}
                                             <div className="pt-5">
                                                 <MDBTypography tag="h6" className="mb-0">
                                                     <Link to="/Search" className="text-body">
@@ -185,12 +173,14 @@ const UseShoppingCart = () => {
                                                 <MDBTypography tag="h5" className="text-uppercase">
                                                     Total Price
                                                 </MDBTypography>
-                                                <MDBTypography tag="h5">$ {calculateTotalSum()}</MDBTypography>
+                                              <MovieTotal movies={movies}/>
                                             </div>
 
-                                            <Link to="/checkout" className="btn btn-primary btn-lg w-100">
-                                                Checkout
-                                            </Link>
+                                            {movies.length > 0 && (
+                                                <Link to="/checkout" className="btn btn-primary btn-lg w-100">
+                                                    Checkout
+                                                </Link>
+                                            )}
                                         </div>
                                     </MDBCol>
                                 </MDBRow>
@@ -198,8 +188,7 @@ const UseShoppingCart = () => {
                         </MDBCard>
                     </MDBCol>
                 </MDBRow>
-            </MDBContainer>
-        </section>
+
     );
 
 };
