@@ -3,7 +3,7 @@ function CheckoutPage ()
 {
     return (
         <>
-            <h> in Checkout</h>
+            <h> In Checkout</h>
         </>
 
     );
