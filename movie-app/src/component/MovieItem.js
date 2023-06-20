@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Card} from "react-bootstrap";
 import {MDBBtn, MDBCardImage, MDBCol, MDBRow, MDBTypography} from "mdb-react-ui-kit";
 import {FaTrashAlt} from "react-icons/fa";
+import fetchMovies from "../hooks/fetchMovies";
 
 const MovieComponent = ({ movie }) => {
     const [isAddedToCart, setIsAddedToCart] = useState(false);
@@ -53,6 +54,7 @@ const MovieComponent = ({ movie }) => {
                     {isAddedToCart ? (
                         <p>Added to cart!</p>
                     ) : (
+                        // <button onClick={() => handleAddToBag(result)}>Add to Cart</button>
                         <button onClick={handleAddToCart}>Add to Cart</button>
                     )}
                 </Card.Body>

@@ -16,6 +16,8 @@ function FetchMovies(setMovies) {
 
         getMovies();
     }, []);
+
+
 }
 
 
