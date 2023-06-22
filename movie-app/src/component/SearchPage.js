@@ -1,18 +1,20 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {Container, Row, Col, Form, Button, Alert, Card, Dropdown} from 'react-bootstrap';
+import {Container, Row, Col, Form, Button, Alert, Card, Dropdown, Offcanvas} from 'react-bootstrap';
 import GenreDropdown from "./GenreDropdown ";
 import MovieItems from "./MovieItem";
 import '..//index.css';
 import FetchMovies from "../hooks/fetchMovies";
 import useFetchMovies from "../hooks/useFetchMovies";
-import fetchMovies from "../hooks/fetchMovies"; // Import the CSS file
+import fetchMovies from "../hooks/fetchMovies";
+import {MDBBtn} from "mdb-react-ui-kit";
+import {FaTrashAlt} from "react-icons/fa"; // Import the CSS file
 const API_KEY = '13f7a88e55dd111b7d108658b6b6216a';
 const GENRE_API_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
 const GENERAL_SEARCH_API_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&include_adult=false`;
 const SEARCH_BY_GENRE = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false`;
 
-const SearchPage = ({movies ,setMovies }) => {
+const SearchPage = ({movies, setMovies}) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [genres, setGenres] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
@@ -22,6 +24,13 @@ const SearchPage = ({movies ,setMovies }) => {
     const [showSearchHistory, setShowSearchHistory] = useState(false); // New state variable
     const [searchHistory, setSearchHistory] = useState([]);
     const [serverError, setserverError] = useState(false);
+    const [showHistory, setShowHistory] = useState(false);
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
 
     const GENRESERROR = "There is a problem displaying the movies categories";
     const SEARCHERROR = "There is a problem searching for the movies, please try again later";
@@ -43,10 +52,6 @@ const SearchPage = ({movies ,setMovies }) => {
 
         fetchGenres();
     }, []);
-
-    // useEffect(() => {
-    //     FetchMovies(setMovies);
-    // }, []);
 
     const handleMouseEnter = () => {
         setShowSearchHistory(true);
@@ -72,42 +77,45 @@ const SearchPage = ({movies ,setMovies }) => {
         setSearchHistory((prevHistory) => prevHistory.filter((item) => item.id !== itemId));
     };
     const handleSearch = async (event, genreId) => {
-            if (event) {
-                event.preventDefault();
-            }
-            setIsLoading(true);
-            setSearchError(false);
-
-            try {
-                let apiUrl;
-
-                if (genreId) {
-                    // Search by genre
-                    apiUrl = `${SEARCH_BY_GENRE}&with_genres=${genreId}`;
-                } else if (searchQuery) {
-                    // Search by movie name or actor
-                    apiUrl = `${GENERAL_SEARCH_API_URL}&query=${encodeURIComponent(searchQuery)}`;
-                    const newSearchHistoryItem = {id: Date.now(), query: searchQuery};
-
-                    // Check if the search query already exists in the search history
-                    const isDuplicateSearch = searchHistory.some((item) => item.query === searchQuery);
-
-                    if (!isDuplicateSearch) {
-                        const newSearchHistory = [newSearchHistoryItem, ...searchHistory];
-                        setSearchHistory(newSearchHistory);
-                    }
-                }
-
-                const response = await axios.get(apiUrl);
-                setSearchResults(response.data.results);
-            } catch
-                (error) {
-                setSearchError(true);
-            }
-
-            setIsLoading(false);
+        if (event) {
+            event.preventDefault();
         }
-    ;
+        setIsLoading(true);
+        setSearchError(false);
+
+        try {
+            let apiUrl;
+
+            if (genreId) {
+                // Search by genre
+                apiUrl = `${SEARCH_BY_GENRE}&with_genres=${genreId}`;
+            } else if (searchQuery) {
+                // Search by movie name or actor
+                apiUrl = `${GENERAL_SEARCH_API_URL}&query=${encodeURIComponent(searchQuery)}`;
+                const newSearchHistoryItem = {id: Date.now(), query: searchQuery};
+
+                // Check if the search query already exists in the search history
+                const isDuplicateSearch = searchHistory.some((item) => item.query === searchQuery);
+
+                if (!isDuplicateSearch) {
+                    const newSearchHistory = [newSearchHistoryItem, ...searchHistory];
+                    setSearchHistory(newSearchHistory);
+                }
+            }
+
+            const response = await axios.get(apiUrl);
+            setSearchResults(response.data.results);
+        } catch
+            (error) {
+            setSearchError(true);
+        }
+
+        setIsLoading(false);
+    }
+    const handleClearAll = () => {
+        // Handle clear all search history
+        console.log("Cleared all search history");
+    };
 
     return (
         <>
@@ -122,28 +130,51 @@ const SearchPage = ({movies ,setMovies }) => {
                             onFocus={handleMouseEnter}
                             onBlur={handleMouseLeave}
                         />
-                        {searchHistory.length > 0 && (
-                            <div className="bg-gray p-1 custom-gray-div col-3">
-                                <ul className="search-history">
-                                    {searchHistory.map((item) => (
-                                        <li className="sub-menu-item col-9" role="none">
-                                            <button
-                                                className="btn btn-link"
-                                                onClick={() => handleHistoryItemClick(item)}
-                                            >
-                                                {item.query}
-                                            </button>
-                                            <button
-                                                className="btn btn-link col-3"
-                                                onClick={() => handleDeleteSearchHistoryItem(item.id)}
-                                            >
-                                                X
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
+                        <div>
+                            <Button variant="primary" onClick={handleShow} className="me-2">
+                                Search History
+                            </Button>
+
+                            <Offcanvas placement="end" show={show} onHide={handleClose}>
+
+                                <Offcanvas.Header closeButton>
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                        <Offcanvas.Title>Search History</Offcanvas.Title>
+                                    </div>
+                                </Offcanvas.Header>
+                                <Offcanvas.Body>
+                                    {/*<div style={{*/}
+                                    {/*    display: 'flex',*/}
+                                    {/*    justifyContent: 'center',*/}
+                                    {/*    alignItems: 'center'*/}
+                                    {/*}}>*/}
+                                        {searchHistory.map((item) => (
+                                            <div key={item.id}>
+                                                <MDBBtn
+                                                    color="link"
+                                                    onClick={() => handleHistoryItemClick(item)}
+                                                    style={{color: 'black'}}
+                                                >
+                                                    {item.query}
+                                                </MDBBtn>
+                                                <MDBBtn
+                                                    color="link"
+                                                    onClick={() => handleDeleteSearchHistoryItem(item.id)}
+                                                    style={{color: 'black'}}
+                                                >
+                                                    <FaTrashAlt size={16}/>
+                                                </MDBBtn>
+                                            </div>
+                                        ))}
+                                    {/*</div>*/}
+                                </Offcanvas.Body>
+
+                            </Offcanvas>
+                        </div>
                     </Col>
                     <Col sm={3} className="d-flex align-items-center">
                         <Button type="submit">Search</Button>
@@ -183,7 +214,8 @@ const SearchPage = ({movies ,setMovies }) => {
                     {searchResults.map((result) => (
                         <Col key={result.id} sm={4} className="mb-4">
 
-                            <MovieItems movie={result} movies = {movies} setMovies = {setMovies} setserverError={setserverError}/>
+                            <MovieItems movie={result} movies={movies} setMovies={setMovies}
+                                        setserverError={setserverError}/>
                         </Col>
                     ))}
                 </Row>

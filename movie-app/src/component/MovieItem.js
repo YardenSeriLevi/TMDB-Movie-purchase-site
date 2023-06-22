@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
-import {Button, Card} from "react-bootstrap";
+import {Button, Card, Toast} from "react-bootstrap";
 import {MDBBtn, MDBCardImage, MDBCol, MDBRow, MDBTypography} from "mdb-react-ui-kit";
 import {FaTrashAlt} from "react-icons/fa";
 import fetchMovies from "../hooks/fetchMovies";
 import axios from "axios";
 
-const MovieComponent = ({movie, movies, setMovies,setserverError}) => {
+const MovieComponent = ({movie, movies, setMovies,setserverError1}) => {
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const [cartError, setCartError] = useState(false);
-    // const [serverError, setserverError] = useState(false);
+    const [serverError, setServerError] = useState(false);
 
     const ADDTOCARTERROR = "There is a problem adding the movie to the cart, please try again later";
-
+    const SERVERERROR = "There is a communication problem with the server";
     const handleAddToCart = () => {
 
         setCartError(false);
@@ -38,7 +38,6 @@ const MovieComponent = ({movie, movies, setMovies,setserverError}) => {
                     console.log('Movie added to cart successfully');
                 } else {
                     setCartError(true);
-                    console.error('Failed to add movie to cart');
                 }
             })
             .catch(error => {
@@ -49,14 +48,14 @@ const MovieComponent = ({movie, movies, setMovies,setserverError}) => {
 
     async function getMovies() {
 
-        setserverError(false);
+        setServerError(false);
         try {
             const result = await axios.get('/cart/items');
             setMovies(result.data);
         } catch (error) {
             console.log(error);
             // Handle the error separately
-            setserverError(true);
+            setServerError(true);
         }
     }
 
@@ -92,6 +91,9 @@ const MovieComponent = ({movie, movies, setMovies,setserverError}) => {
                         )}
                         {cartError && <div className="text-danger">{ADDTOCARTERROR}</div>}
                     </Card.Body>
+                    {serverError && <div className="text-danger">{SERVERERROR}</div>}
+
+                    {/*{ serverError && <Toast> {SERVERERROR} </Toast>}*/}
                 </Card>
             </div>
         </>
