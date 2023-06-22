@@ -1,20 +1,17 @@
 import React, {useState} from 'react';
-import FormFetchWithHook from "./component/SearchPage";
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import MenuBar from "./component/ManuBar";
 import Search from "./component/SearchPage";
-import Cart from "./component/ShoppingCart";
 import Checkout from "./component/CheckoutPage";
 import './index.css'; // Import the CSS file
 import {Link, Outlet} from 'react-router-dom';
-import QuantityEdit from "./component/ShoppingCart";
 import {MDBContainer} from "mdb-react-ui-kit";
 import fetchMovies from "./hooks/fetchMovies";
+import UseShoppingCart from "./hooks/UseShoppingCart";
 
 const App = () => {
 
     const [movies, setMovies] = useState([]);
-    fetchMovies(setMovies);
 
     return (
         <>
@@ -23,10 +20,10 @@ const App = () => {
                 <section className="h-100 h-custom" style={{backgroundColor: "#eee", minHeight: '100%'}}>
                     <MDBContainer className="py-5 h-100">
                         <Routes>
-                            <Route path="/" element={<Search/>}/>
-                            <Route path="/cart" element={<Cart/>}/>
-                            <Route path="/search" element={<Search/>}/>
-                            <Route path="/checkout" element={<Checkout/>}/>
+                            <Route path="/" element={<Search movies = {movies} setMovies = {setMovies}/>}/>
+                            <Route path="/cart" element={<UseShoppingCart movies={movies} setMovies={setMovies} />} />
+                            <Route path="/search" element={<Search movies = {movies} setMovies = {setMovies}/>}/>
+                            <Route path="/checkout" element={<Checkout movies = {movies} setMovies = {setMovies}/>}/>
                         </Routes>
                     </MDBContainer>
                 </section>

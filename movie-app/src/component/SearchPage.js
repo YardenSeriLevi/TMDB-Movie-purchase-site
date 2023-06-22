@@ -12,7 +12,7 @@ const GENRE_API_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${A
 const GENERAL_SEARCH_API_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&include_adult=false`;
 const SEARCH_BY_GENRE = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false`;
 
-const SearchPage = () => {
+const SearchPage = ({movies ,setMovies }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [genres, setGenres] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
@@ -21,10 +21,11 @@ const SearchPage = () => {
     const [searchError, setSearchError] = useState(false);
     const [showSearchHistory, setShowSearchHistory] = useState(false); // New state variable
     const [searchHistory, setSearchHistory] = useState([]);
-    const [movies, setMovies] = useState([]);
+    const [serverError, setserverError] = useState(false);
 
     const GENRESERROR = "There is a problem displaying the movies categories";
     const SEARCHERROR = "There is a problem searching for the movies, please try again later";
+    const SERVERERROR = "There is a communication problem with the server";
     // const { movies } = useFetchMovies();
 
     fetchMovies(setMovies);
@@ -172,6 +173,7 @@ const SearchPage = () => {
                 </Col>
             </Row>
 
+            {serverError && <div className="text-danger">{SERVERERROR}</div>}
 
             {isLoading ? (
                 <div>Loading...</div>
@@ -180,7 +182,8 @@ const SearchPage = () => {
                 <Row>
                     {searchResults.map((result) => (
                         <Col key={result.id} sm={4} className="mb-4">
-                            <MovieItems movie={result} />
+
+                            <MovieItems movie={result} movies = {movies} setMovies = {setMovies} setserverError={setserverError}/>
                         </Col>
                     ))}
                 </Row>

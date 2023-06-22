@@ -18,8 +18,7 @@ import {FaTrashAlt} from 'react-icons/fa';
 import MovieTotal from "../component/TotalPrice";
 import {Alert} from "react-bootstrap";
 
-const UseShoppingCart = () => {
-    const [movies, setMovies] = useState([]);
+const UseShoppingCart = ({movies ,setMovies }) => {
     const [error, setError] = useState(null);
 
     const EMPTYCART = "Your cart is empty. Start adding items to your cart to proceed with your purchase."

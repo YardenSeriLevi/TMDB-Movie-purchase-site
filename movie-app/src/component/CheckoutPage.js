@@ -5,12 +5,12 @@ import MovieTotal from "./TotalPrice";
 import axios from "axios";
 import fetchMovies from "../hooks/fetchMovies";
 
-function CheckoutPage() {
+function CheckoutPage({movies ,setMovies }) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [validated, setValidated] = useState(false);
-    const [movies, setMovies] = useState([]);
+    // const [movies, setMovies] = useState([]);
 
     fetchMovies(setMovies);
     const handleSubmit = (event) => {
