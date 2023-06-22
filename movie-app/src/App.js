@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import FormFetchWithHook from "./component/SearchPage";
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import MenuBar from "./component/ManuBar";
@@ -9,8 +9,13 @@ import './index.css'; // Import the CSS file
 import {Link, Outlet} from 'react-router-dom';
 import QuantityEdit from "./component/ShoppingCart";
 import {MDBContainer} from "mdb-react-ui-kit";
+import fetchMovies from "./hooks/fetchMovies";
 
 const App = () => {
+
+    const [movies, setMovies] = useState([]);
+    fetchMovies(setMovies);
+
     return (
         <>
             <Router>

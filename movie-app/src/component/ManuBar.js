@@ -12,13 +12,7 @@ const MenuBar = () => {
                             <Link to="/" className="nav-link">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/Search" className="nav-link">Search</Link>
-                        </li>
-                        <li className="nav-item">
                             <Link to="/Cart" className="nav-link">Cart</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/Checkout" className="nav-link">Checkout</Link>
                         </li>
                     </ul>
                 </div>

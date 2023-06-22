@@ -16,11 +16,13 @@ import fetchMovies from './fetchMovies';
 import {Link} from "react-router-dom";
 import {FaTrashAlt} from 'react-icons/fa';
 import MovieTotal from "../component/TotalPrice";
+import {Alert} from "react-bootstrap";
 
 const UseShoppingCart = () => {
     const [movies, setMovies] = useState([]);
     const [error, setError] = useState(null);
-    const [empty, setEmpty] = useState("Your cart is empty. Start adding items to your cart to proceed with your purchase.");
+
+    const EMPTYCART = "Your cart is empty. Start adding items to your cart to proceed with your purchase."
 
     fetchMovies(setMovies);
     const handleDeleteMovie = async (movieId) => {
@@ -58,136 +60,137 @@ const UseShoppingCart = () => {
 
     return (
 
-                <MDBRow className="justify-content-center align-items-center h-100">
-                    <MDBCol size="12">
-                        <MDBCard
-                            className="card-registration card-registration-2"
-                            style={{borderRadius: "15px"}}
-                        >
-                            <MDBCardBody className="p-0">
-                                <MDBRow className="g-0">
-                                    <MDBCol lg="8">
-                                        <div className="p-5">
-                                            <MDBTypography tag="h1" className="fw-bold mb-0 text-black">
-                                                Shopping Cart
-                                            </MDBTypography>
-                                            <MDBTypography className="mb-0 text-muted">
-                                                {movies.length} items
-                                            </MDBTypography>
+        <MDBRow className="justify-content-center align-items-center h-100">
+            <MDBCol size="12">
+                <MDBCard
+                    className="card-registration card-registration-2"
+                    style={{borderRadius: "15px"}}
+                >
+                    <MDBCardBody className="p-0">
+                        <MDBRow className="g-0">
+                            <MDBCol lg="8">
+                                <div className="p-5">
+                                    <MDBTypography tag="h1" className="fw-bold mb-0 text-black">
+                                        Shopping Cart
+                                    </MDBTypography>
+                                    <MDBTypography className="mb-0 text-muted">
+                                        {movies.length} items
+                                    </MDBTypography>
 
-                                            {movies.map(movie => (
-                                                <MDBRow
-                                                    className="mb-4 d-flex justify-content-between align-items-center"
-                                                    key={movie.id}
-                                                >
-                                                    <hr className="my-4"/>
-                                                    <MDBCol md="2">
-                                                        <MDBCardImage
-                                                            src={movie.imageUrl}
-                                                            fluid
-                                                            className="rounded-3"
-                                                            alt="Cotton T-shirt"
-                                                        />
-                                                    </MDBCol>
-                                                    <MDBCol md="10" lg="10" xl="10">
-                                                        <MDBTypography tag="h6" className="text-muted">
-                                                            Movie:
-                                                        </MDBTypography>
-                                                        <MDBTypography tag="h6" className="text-black mb-0">
-                                                            {movie.title}
-                                                        </MDBTypography>
-
-                                                        <MDBTypography tag="h6" className="text-muted">
-                                                            Release Date:
-                                                        </MDBTypography>
-                                                        <MDBTypography tag="h6" className="text-black mb-0">
-                                                            {movie.releaseDate}
-                                                        </MDBTypography>
-
-                                                        <MDBTypography tag="h6" className="text-muted">
-                                                            Price:
-                                                        </MDBTypography>
-                                                        <MDBTypography tag="h6" className="text-black mb-0">
-                                                            $ {movie.price}
-                                                        </MDBTypography>
-
-                                                        <MDBBtn
-                                                            color="link"
-                                                            onClick={() => handleDeleteMovie(movie.id)}
-                                                        >
-                                                            <FaTrashAlt size={16}/>
-                                                        </MDBBtn>
-                                                        {movie.errorMessage && (
-                                                            <div className="text-danger">{movie.errorMessage}</div>
-                                                        )}
-                                                    </MDBCol>
-                                                </MDBRow>
-                                            ))}
-
+                                    {movies.map(movie => (
+                                        <MDBRow
+                                            className="mb-4 d-flex justify-content-between align-items-center"
+                                            key={movie.id}
+                                        >
                                             <hr className="my-4"/>
-                                            <div className="pt-5">
-                                                {error && <div className="text-danger">{error}</div>}
-                                                {movies.length > 0 && (
-                                                    <MDBBtn
-                                                        color="danger"
-                                                        onClick={handleClearCart}
-                                                        size="lg"
-                                                        className="clear-button"
-                                                    >
-                                                        Clear Cart
-                                                    </MDBBtn>
+                                            <MDBCol md="2">
+                                                <MDBCardImage
+                                                    src={movie.imageUrl}
+                                                    fluid
+                                                    className="rounded-3"
+                                                    alt="Cotton T-shirt"
+                                                />
+                                            </MDBCol>
+                                            <MDBCol md="10" lg="10" xl="10">
+                                                <MDBTypography tag="h6" className="text-muted">
+                                                    Movie:
+                                                </MDBTypography>
+                                                <MDBTypography tag="h6" className="text-black mb-0">
+                                                    {movie.title}
+                                                </MDBTypography>
+
+                                                <MDBTypography tag="h6" className="text-muted">
+                                                    Release Date:
+                                                </MDBTypography>
+                                                <MDBTypography tag="h6" className="text-black mb-0">
+                                                    {movie.releaseDate}
+                                                </MDBTypography>
+
+                                                <MDBTypography tag="h6" className="text-muted">
+                                                    Price:
+                                                </MDBTypography>
+                                                <MDBTypography tag="h6" className="text-black mb-0">
+                                                    $ {movie.price}
+                                                </MDBTypography>
+
+                                                <MDBBtn
+                                                    color="link"
+                                                    onClick={() => handleDeleteMovie(movie.id)}
+                                                >
+                                                    <FaTrashAlt size={16}/>
+                                                </MDBBtn>
+                                                {movie.errorMessage && (
+                                                    <div className="text-danger">{movie.errorMessage}</div>
                                                 )}
-                                            </div>
-                                            {!movies.length > 0 && (
-                                                <MDBTypography tag="h4" className="text-danger">
-                                                    {empty}
-                                                </MDBTypography>
-                                            )}
-                                            <div className="pt-5">
-                                                <MDBTypography tag="h6" className="mb-0">
-                                                    <Link to="/Search" className="text-body">
-                                                        Back to shop
-                                                    </Link>
-                                                </MDBTypography>
-                                            </div>
-                                        </div>
-                                    </MDBCol>
-                                    <MDBCol lg="4" className="bg-grey">
-                                        <div className="p-5">
-                                            <MDBTypography tag="h3" className="fw-bold mb-5 mt-2 pt-1">
-                                                Summary
-                                            </MDBTypography>
+                                            </MDBCol>
+                                        </MDBRow>
+                                    ))}
 
-                                            <hr className="my-4" />
+                                    <hr className="my-4"/>
+                                    <div className="pt-5">
+                                        {error && <div className="text-danger">{error}</div>}
+                                        {movies.length > 0 && (
+                                            <MDBBtn
+                                                color="danger"
+                                                onClick={handleClearCart}
+                                                size="lg"
+                                                className="clear-button"
+                                            >
+                                                Clear Cart
+                                            </MDBBtn>
+                                        )}
+                                    </div>
+                                    {!movies.length > 0 && (
+                                        <MDBTypography tag="h4" className="text-danger">
+                                            {EMPTYCART}
+                                        </MDBTypography>
+                                        // <Alert variant="danger">{empty}</Alert>
+                                        )}
+                                    <div className="pt-5">
+                                        <MDBTypography tag="h6" className="mb-0">
+                                            <Link to="/Search" className="text-body">
+                                                Back to shop
+                                            </Link>
+                                        </MDBTypography>
+                                    </div>
+                                </div>
+                            </MDBCol>
+                            <MDBCol lg="4" className="bg-grey">
+                                <div className="p-5">
+                                    <MDBTypography tag="h3" className="fw-bold mb-5 mt-2 pt-1">
+                                        Summary
+                                    </MDBTypography>
 
-                                            <div className="d-flex justify-content-between mb-4">
-                                                <MDBTypography tag="h5" className="text-uppercase">
-                                                    Items
-                                                </MDBTypography>
-                                                <MDBTypography tag="h5">{movies.length}</MDBTypography>
-                                            </div>
+                                    <hr className="my-4"/>
 
-                                            <hr className="my-4" />
+                                    <div className="d-flex justify-content-between mb-4">
+                                        <MDBTypography tag="h5" className="text-uppercase">
+                                            Items
+                                        </MDBTypography>
+                                        <MDBTypography tag="h5">{movies.length}</MDBTypography>
+                                    </div>
 
-                                            <div className="d-flex justify-content-between mb-5">
-                                                <MDBTypography tag="h5" className="text-uppercase">
-                                                    Total Price
-                                                </MDBTypography>
-                                              <MovieTotal movies={movies}/>
-                                            </div>
+                                    <hr className="my-4"/>
 
-                                            {movies.length > 0 && (
-                                                <Link to="/checkout" className="btn btn-primary btn-lg w-100">
-                                                    Checkout
-                                                </Link>
-                                            )}
-                                        </div>
-                                    </MDBCol>
-                                </MDBRow>
-                            </MDBCardBody>
-                        </MDBCard>
-                    </MDBCol>
-                </MDBRow>
+                                    <div className="d-flex justify-content-between mb-5">
+                                        <MDBTypography tag="h5" className="text-uppercase">
+                                            Total Price
+                                        </MDBTypography>
+                                        <MovieTotal movies={movies}/>
+                                    </div>
+
+                                    {movies.length > 0 && (
+                                        <Link to="/checkout" className="btn btn-primary btn-lg w-100">
+                                            Checkout
+                                        </Link>
+                                    )}
+                                </div>
+                            </MDBCol>
+                        </MDBRow>
+                    </MDBCardBody>
+                </MDBCard>
+            </MDBCol>
+        </MDBRow>
 
     );
 
