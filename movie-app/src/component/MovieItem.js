@@ -5,7 +5,7 @@ import {FaTrashAlt} from "react-icons/fa";
 import fetchMovies from "../hooks/fetchMovies";
 import axios from "axios";
 
-const MovieComponent = ({movie, movies, setMovies,setserverError1}) => {
+const MovieComponent = ({movie, movies, setMovies}) => {
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const [cartError, setCartError] = useState(false);
     const [serverError, setServerError] = useState(false);

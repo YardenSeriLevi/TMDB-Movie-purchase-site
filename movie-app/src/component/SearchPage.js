@@ -53,25 +53,11 @@ const SearchPage = ({movies, setMovies}) => {
         fetchGenres();
     }, []);
 
-    const handleMouseEnter = () => {
-        setShowSearchHistory(true);
-    };
-
-
-    const handleMouseLeave = () => {
-        setShowSearchHistory(false);
-    };
-
     const handleHistoryItemClick = (item) => {
         setSearchQuery(item.query);
+        handleSearch()
     };
 
-    const handleDeleteHistoryItem = (event, itemId) => {
-        event.stopPropagation();
-
-        const updatedHistory = searchHistory.filter((item) => item.id !== itemId);
-        setSearchHistory(updatedHistory);
-    };
 
     const handleDeleteSearchHistoryItem = (itemId) => {
         setSearchHistory((prevHistory) => prevHistory.filter((item) => item.id !== itemId));
@@ -112,73 +98,68 @@ const SearchPage = ({movies, setMovies}) => {
 
         setIsLoading(false);
     }
-    const handleClearAll = () => {
-        // Handle clear all search history
-        console.log("Cleared all search history");
+    const handleClearAllHistory = () => {
+        setSearchHistory([]);
     };
 
     return (
         <>
             <Form onSubmit={handleSearch}>
                 <Form.Group as={Row} controlId="formSearch">
-                    <Col sm={9} className="d-flex align-items-center">
+                    <Col sm={6} className="d-flex align-items-center">
                         <Form.Control
                             type="text"
                             value={searchQuery}
                             onChange={(event) => setSearchQuery(event.target.value)}
                             placeholder="Search by movie name or actor"
-                            onFocus={handleMouseEnter}
-                            onBlur={handleMouseLeave}
                         />
-                        <div>
-                            <Button variant="primary" onClick={handleShow} className="me-2">
-                                Search History
-                            </Button>
-
-                            <Offcanvas placement="end" show={show} onHide={handleClose}>
-
-                                <Offcanvas.Header closeButton>
-                                    <div style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Offcanvas.Title>Search History</Offcanvas.Title>
-                                    </div>
-                                </Offcanvas.Header>
-                                <Offcanvas.Body>
-                                    {/*<div style={{*/}
-                                    {/*    display: 'flex',*/}
-                                    {/*    justifyContent: 'center',*/}
-                                    {/*    alignItems: 'center'*/}
-                                    {/*}}>*/}
-                                        {searchHistory.map((item) => (
-                                            <div key={item.id}>
-                                                <MDBBtn
-                                                    color="link"
-                                                    onClick={() => handleHistoryItemClick(item)}
-                                                    style={{color: 'black'}}
-                                                >
-                                                    {item.query}
-                                                </MDBBtn>
-                                                <MDBBtn
-                                                    color="link"
-                                                    onClick={() => handleDeleteSearchHistoryItem(item.id)}
-                                                    style={{color: 'black'}}
-                                                >
-                                                    <FaTrashAlt size={16}/>
-                                                </MDBBtn>
-                                            </div>
-                                        ))}
-                                    {/*</div>*/}
-                                </Offcanvas.Body>
-
-                            </Offcanvas>
-                        </div>
                     </Col>
-                    <Col sm={3} className="d-flex align-items-center">
+                    <Col xs={3} className="d-flex align-items-center">
                         <Button type="submit">Search</Button>
-                        <div className="cart-icon ml-3">
+                    </Col>
+                    <Col xs={2} className="d-flex align-items-center">
+                        <Button variant="primary" onClick={handleShow} className="me-2">
+                            Search History
+                        </Button>
+                        <Offcanvas placement="end" show={show} onHide={handleClose}>
+                            <Offcanvas.Header closeButton>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Offcanvas.Title>Search History</Offcanvas.Title>
+                                </div>
+                            </Offcanvas.Header>
+                            <Offcanvas.Body>
+                                {searchHistory.map((item) => (
+                                    <div key={item.id}>
+                                        <Button
+                                            variant="link"
+                                            onClick={() => handleHistoryItemClick(item)}
+                                            style={{ color: 'black' }}
+                                        >
+                                            {item.query}
+                                        </Button>
+                                        <Button
+                                            variant="link"
+                                            onClick={() => handleDeleteSearchHistoryItem(item.id)}
+                                            style={{ color: 'black' }}
+                                        >
+                                            <FaTrashAlt size={16} />
+                                        </Button>
+                                    </div>
+                                ))}
+                                {searchHistory.length > 0 && (
+                                    <Button className="btn-danger" onClick={handleClearAllHistory}>
+                                        Clear history
+                                    </Button>
+                                )}
+                            </Offcanvas.Body>
+                        </Offcanvas>
+                    </Col>
+                    <Col xs={1} className="d-flex align-items-center justify-content-end">
+                        <div className="cart-icon">
                             <i
                                 className="fas fa-shopping-cart icon fa-flip-horizontal"
                                 aria-hidden="true"
@@ -214,8 +195,7 @@ const SearchPage = ({movies, setMovies}) => {
                     {searchResults.map((result) => (
                         <Col key={result.id} sm={4} className="mb-4">
 
-                            <MovieItems movie={result} movies={movies} setMovies={setMovies}
-                                        setserverError={setserverError}/>
+                            <MovieItems movie={result} movies={movies} setMovies={setMovies}/>
                         </Col>
                     ))}
                 </Row>

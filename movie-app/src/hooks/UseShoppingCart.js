@@ -16,7 +16,7 @@ import fetchMovies from './fetchMovies';
 import {Link} from "react-router-dom";
 import {FaTrashAlt} from 'react-icons/fa';
 import MovieTotal from "../component/TotalPrice";
-import {Alert} from "react-bootstrap";
+import {Alert, Button} from "react-bootstrap";
 
 const UseShoppingCart = ({movies ,setMovies }) => {
     const [error, setError] = useState(null);
@@ -112,12 +112,13 @@ const UseShoppingCart = ({movies ,setMovies }) => {
                                                     $ {movie.price}
                                                 </MDBTypography>
 
-                                                <MDBBtn
-                                                    color="link"
+                                                <Button
+                                                    variant="link"
                                                     onClick={() => handleDeleteMovie(movie.id)}
+                                                    style={{ color: 'black' }}
                                                 >
-                                                    <FaTrashAlt size={16}/>
-                                                </MDBBtn>
+                                                    <FaTrashAlt size={16} />
+                                                </Button>
                                                 {movie.errorMessage && (
                                                     <div className="text-danger">{movie.errorMessage}</div>
                                                 )}
@@ -129,14 +130,9 @@ const UseShoppingCart = ({movies ,setMovies }) => {
                                     <div className="pt-5">
                                         {error && <div className="text-danger">{error}</div>}
                                         {movies.length > 0 && (
-                                            <MDBBtn
-                                                color="danger"
-                                                onClick={handleClearCart}
-                                                size="lg"
-                                                className="clear-button"
-                                            >
-                                                Clear Cart
-                                            </MDBBtn>
+                                            <Button className="btn-danger" onClick={handleClearCart}>
+                                            Clear Cart
+                                            </Button>
                                         )}
                                     </div>
                                     {!movies.length > 0 && (
