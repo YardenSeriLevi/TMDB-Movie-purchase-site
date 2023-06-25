@@ -1,27 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {
-    MDBBtn,
     MDBCard, MDBCardBody,
     MDBCardImage,
     MDBCol,
-    MDBContainer,
-    MDBInput,
-    MDBRow, MDBTooltip,
+    MDBRow,
     MDBTypography
 } from "mdb-react-ui-kit";
-import {MDBIcon} from "mdb-react-ui-kit";
-import fetchMovies from './fetchMovies';
+import fetchMovies from '../hooks/fetchMovies';
 
 import {Link} from "react-router-dom";
 import {FaTrashAlt} from 'react-icons/fa';
-import MovieTotal from "../component/TotalPrice";
-import {Alert, Button} from "react-bootstrap";
+import MovieTotal from "./TotalPrice";
+import Empty from "./Empty";
+import {Button} from "react-bootstrap";
 
-const UseShoppingCart = ({movies ,setMovies }) => {
+const ShoppingCart = ({movies ,setMovies }) => {
     const [error, setError] = useState(null);
-
-    const EMPTYCART = "Your cart is empty. Start adding items to your cart to proceed with your purchase."
 
     fetchMovies(setMovies);
     const handleDeleteMovie = async (movieId) => {
@@ -136,10 +131,7 @@ const UseShoppingCart = ({movies ,setMovies }) => {
                                         )}
                                     </div>
                                     {!movies.length > 0 && (
-                                        <MDBTypography tag="h4" className="text-danger">
-                                            {EMPTYCART}
-                                        </MDBTypography>
-                                        // <Alert variant="danger">{empty}</Alert>
+                                        <Empty/>
                                         )}
                                     <div className="pt-5">
                                         <MDBTypography tag="h6" className="mb-0">
@@ -190,5 +182,5 @@ const UseShoppingCart = ({movies ,setMovies }) => {
     );
 
 };
-export default UseShoppingCart;
+export default ShoppingCart;
 

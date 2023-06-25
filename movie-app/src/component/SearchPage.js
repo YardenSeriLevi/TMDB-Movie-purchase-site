@@ -4,28 +4,22 @@ import {Container, Row, Col, Form, Button, Alert, Card, Dropdown, Offcanvas} fro
 import GenreDropdown from "./GenreDropdown ";
 import MovieItems from "./MovieItem";
 import '..//index.css';
-import FetchMovies from "../hooks/fetchMovies";
-import useFetchMovies from "../hooks/useFetchMovies";
 import fetchMovies from "../hooks/fetchMovies";
-import {MDBBtn} from "mdb-react-ui-kit";
 import {FaTrashAlt} from "react-icons/fa"; // Import the CSS file
 const API_KEY = '13f7a88e55dd111b7d108658b6b6216a';
 const GENRE_API_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
 const GENERAL_SEARCH_API_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&include_adult=false`;
 const SEARCH_BY_GENRE = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false`;
 
-const SearchPage = ({movies, setMovies}) => {
+const SearchPage = ({movies, setMovies,searchHistory,setSearchHistory}) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [genres, setGenres] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [genresError, setGenresError] = useState(false);
     const [searchError, setSearchError] = useState(false);
-    const [showSearchHistory, setShowSearchHistory] = useState(false); // New state variable
-    const [searchHistory, setSearchHistory] = useState([]);
-    const [serverError, setserverError] = useState(false);
-    const [showHistory, setShowHistory] = useState(false);
-
+    //const [searchHistory, setSearchHistory] = useState([]);
+    const [serverError, setServerError] = useState(false);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -189,16 +183,16 @@ const SearchPage = ({movies, setMovies}) => {
 
             {isLoading ? (
                 <div>Loading...</div>
-            ) : (
-                // <MovieItems searchResults={searchResults} />
+            ) : searchResults ? (
                 <Row>
                     {searchResults.map((result) => (
                         <Col key={result.id} sm={4} className="mb-4">
-
-                            <MovieItems movie={result} movies={movies} setMovies={setMovies}/>
+                            <MovieItems movie={result} movies={movies} setMovies={setMovies} />
                         </Col>
                     ))}
                 </Row>
+            ) : (
+                <div>No search results found.</div>
             )}
         </>
     );

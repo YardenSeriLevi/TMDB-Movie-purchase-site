@@ -5,7 +5,6 @@ function FetchMovies(setMovies) {
 
     useEffect(() => {
         async function getMovies() {
-            console.log("in here  ffffffffffff");
 
             try {
                 const result = await axios.get('/cart/items');
