@@ -15,7 +15,7 @@ import MovieTotal from "./TotalPrice";
 import Empty from "./Empty";
 import {Button} from "react-bootstrap";
 
-const ShoppingCart = ({movies ,setMovies }) => {
+const ShoppingCart = ({movies, setMovies}) => {
     const [error, setError] = useState(null);
 
     fetchMovies(setMovies);
@@ -54,10 +54,10 @@ const ShoppingCart = ({movies ,setMovies }) => {
 
     return (
 
-        <MDBRow className="justify-content-center align-items-center h-100">
+        <MDBRow className="justify-content-center align-items-center h-100 ">
             <MDBCol size="12">
                 <MDBCard
-                    className="card-registration card-registration-2"
+                    className="card-registration card-registration-2 "
                     style={{borderRadius: "15px"}}
                 >
                     <MDBCardBody className="p-0">
@@ -110,9 +110,9 @@ const ShoppingCart = ({movies ,setMovies }) => {
                                                 <Button
                                                     variant="link"
                                                     onClick={() => handleDeleteMovie(movie.id)}
-                                                    style={{ color: 'black' }}
+                                                    style={{color: 'black'}}
                                                 >
-                                                    <FaTrashAlt size={16} />
+                                                    <FaTrashAlt size={16}/>
                                                 </Button>
                                                 {movie.errorMessage && (
                                                     <div className="text-danger">{movie.errorMessage}</div>
@@ -126,13 +126,16 @@ const ShoppingCart = ({movies ,setMovies }) => {
                                         {error && <div className="text-danger">{error}</div>}
                                         {movies.length > 0 && (
                                             <Button className="btn-danger" onClick={handleClearCart}>
-                                            Clear Cart
+                                                Clear Cart
                                             </Button>
                                         )}
                                     </div>
-                                    {!movies.length > 0 && (
-                                        <Empty/>
+                                    <div className="text-danger">
+                                        {!movies.length > 0 && (
+
+                                            <Empty/>
                                         )}
+                                    </div>
                                     <div className="pt-5">
                                         <MDBTypography tag="h6" className="mb-0">
                                             <Link to="/Search" className="text-body">
@@ -179,7 +182,8 @@ const ShoppingCart = ({movies ,setMovies }) => {
             </MDBCol>
         </MDBRow>
 
-    );
+    )
+        ;
 
 };
 export default ShoppingCart;

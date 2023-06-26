@@ -6,7 +6,7 @@ function Empty() {
     const EMPTYCART = "Your cart is empty. Start adding items to your cart to proceed with your purchase.";
 
     return (
-        <MDBTypography tag="h4" className="text-danger">
+        <MDBTypography tag="h4" >
             {EMPTYCART}
         </MDBTypography>
     );

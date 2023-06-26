@@ -62,3 +62,6 @@ code {
   justify-content: center;
   align-items: center;
 }
+.dark-red-background {
+  background-color: #8B0000;
+}

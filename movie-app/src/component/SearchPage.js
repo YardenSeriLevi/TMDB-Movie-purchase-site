@@ -5,13 +5,14 @@ import GenreDropdown from "./GenreDropdown ";
 import MovieItems from "./MovieItem";
 import '..//index.css';
 import fetchMovies from "../hooks/fetchMovies";
-import {FaTrashAlt} from "react-icons/fa"; // Import the CSS file
+import {FaTrashAlt} from "react-icons/fa";
+import {MDBCard} from "mdb-react-ui-kit"; // Import the CSS file
 const API_KEY = '13f7a88e55dd111b7d108658b6b6216a';
 const GENRE_API_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
 const GENERAL_SEARCH_API_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&include_adult=false`;
 const SEARCH_BY_GENRE = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false`;
 
-const SearchPage = ({movies, setMovies,searchHistory,setSearchHistory}) => {
+const SearchPage = ({movies, setMovies, searchHistory, setSearchHistory}) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [genres, setGenres] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
@@ -131,16 +132,16 @@ const SearchPage = ({movies, setMovies,searchHistory,setSearchHistory}) => {
                                         <Button
                                             variant="link"
                                             onClick={() => handleHistoryItemClick(item)}
-                                            style={{ color: 'black' }}
+                                            style={{color: 'black'}}
                                         >
                                             {item.query}
                                         </Button>
                                         <Button
                                             variant="link"
                                             onClick={() => handleDeleteSearchHistoryItem(item.id)}
-                                            style={{ color: 'black' }}
+                                            style={{color: 'black'}}
                                         >
-                                            <FaTrashAlt size={16} />
+                                            <FaTrashAlt size={16}/>
                                         </Button>
                                     </div>
                                 ))}
@@ -166,36 +167,70 @@ const SearchPage = ({movies, setMovies,searchHistory,setSearchHistory}) => {
 
             <p/>
 
-            <Row>
-                <Col sm={6}>
-                    {!genresError && <GenreDropdown genres={genres} handleGenreClick={handleSearch}/>}
-                    {genresError && <Alert variant="danger">{GENRESERROR}</Alert>}
-                </Col>
-            </Row>
-            <p/>
-            <Row>
-                <Col sm={6}>
-                    {searchError && <Alert variant="danger">{SEARCHERROR}</Alert>}
-                </Col>
-            </Row>
-
-            {serverError && <div className="text-danger">{SERVERERROR}</div>}
-
-            {isLoading ? (
-                <div>Loading...</div>
-            ) : searchResults ? (
+            {/*<MDBCard*/}
+            {/*    className="card-registration card-registration-2  "*/}
+            {/*    style={{borderRadius: "15px"}}*/}
+            {/*>*/}
                 <Row>
-                    {searchResults.map((result) => (
-                        <Col key={result.id} sm={4} className="mb-4">
-                            <MovieItems movie={result} movies={movies} setMovies={setMovies} />
-                        </Col>
-                    ))}
+                    <Col sm={6}>
+                        {!genresError && <GenreDropdown genres={genres} handleGenreClick={handleSearch}/>}
+                        {genresError && <Alert variant="danger">{GENRESERROR}</Alert>}
+                    </Col>
                 </Row>
-            ) : (
-                <div>No search results found.</div>
-            )}
+                <p/>
+                <Row>
+                    <Col sm={6}>
+                        {searchError && <Alert variant="danger">{SEARCHERROR}</Alert>}
+                    </Col>
+                </Row>
+
+                {serverError && <div className="text-danger">{SERVERERROR}</div>}
+
+                <div id="page_1" className="page_wrapper">
+                    {isLoading ? (
+                        <div>Loading...</div>
+                    ) : searchResults ? (
+                        <Row>
+                            {searchResults.map((result) => (
+                                <Col key={result.id} sm={3} md={3} className="mb-5 ">
+                                    <MovieItems movie={result} movies={movies} setMovies={setMovies}/>
+                                </Col>
+                            ))}
+                        </Row>
+                    ) : (
+                        <div>No search results found.</div>
+                    )}
+                </div>
+            {/*</MDBCard>*/}
+
+            {/*          <div className="year_column">*/}
+            {/*              <span className="col_1 font_size_1">from</span>*/}
+            {/*              <span className="k-widget k-datepicker font_size_1" style={{ width: '100%' }}>*/}
+            {/*  <span className="k-picker-wrap k-state-default">*/}
+            {/*    <input*/}
+            {/*        id="release_date_gte"*/}
+            {/*        className="font_size_1 k-input"*/}
+            {/*        value=""*/}
+            {/*        style={{ width: '100%' }}*/}
+            {/*        data-role="datepicker"*/}
+            {/*        type="text"*/}
+            {/*        role="combobox"*/}
+            {/*        aria-expanded="false"*/}
+            {/*        aria-owns="release_date_gte_dateview"*/}
+            {/*        autoComplete="off"*/}
+            {/*        data-aria-disabled="false"*/}
+            {/*        data-aria-activedescendant="i8636344-b0f4-478f-9621-54c3824b4371_cell_selected"*/}
+            {/*    />*/}
+            {/*    <span unselectable="on" className="k-select" aria-label="select" role="button" aria-controls="release_date_gte_dateview">*/}
+            {/*      <span className="k-icon k-i-calendar"></span>*/}
+            {/*    </span>*/}
+            {/*  </span>*/}
+            {/*</span>*/}
+            {/*          </div>*/}
         </>
     );
 };
 
 export default SearchPage;
+
+

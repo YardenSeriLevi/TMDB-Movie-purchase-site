@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { MDBTypography } from 'mdb-react-ui-kit';
+import React, {useEffect, useState} from 'react';
+import {Container, Row, Col, Form, Button} from 'react-bootstrap';
+import {MDBTypography} from 'mdb-react-ui-kit';
 import MovieTotal from './TotalPrice';
 import axios from 'axios';
 import fetchMovies from '../hooks/fetchMovies';
 import Empty from './Empty';
 
-function CheckoutPage({ movies, setMovies }) {
+function CheckoutPage({movies, setMovies}) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -20,7 +20,7 @@ function CheckoutPage({ movies, setMovies }) {
         if (form.checkValidity()) {
             try {
                 const totalPrice = calculateTotalPrice(); // Calculate the total price
-                console.log("total price = " +totalPrice)
+                console.log("total price = " + totalPrice)
                 const purchaseData = {
                     firstName: firstName,
                     lastName: lastName,
@@ -51,7 +51,7 @@ function CheckoutPage({ movies, setMovies }) {
     return (
         <Container className="d-flex justify-content-center align-items-center">
             {movies.length > 0 ? (
-                <div style={{ maxWidth: '400px' }}>
+                <div style={{maxWidth: '400px'}}>
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
                         <Row className="mb-4">
                             <Col>
@@ -91,11 +91,11 @@ function CheckoutPage({ movies, setMovies }) {
                             Please enter a valid email address.
                         </Form.Control.Feedback>
 
-                        <div className="d-flex justify-content-between mb-5">
+                        <div className="d-flex justify-content-between mb-5 text-white">
                             <MDBTypography tag="h5" className="text-uppercase">
                                 Total Price
                             </MDBTypography>
-                            <MovieTotal movies={movies} />
+                            <MovieTotal movies={movies}/>
                         </div>
 
                         <Button variant="primary" type="submit" className="mb-4" block="true">
@@ -104,7 +104,9 @@ function CheckoutPage({ movies, setMovies }) {
                     </Form>
                 </div>
             ) : (
-                <Empty />
+                <div className="text-white">
+                    <Empty/>
+                </div>
             )}
         </Container>
     );

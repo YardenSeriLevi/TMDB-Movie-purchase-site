@@ -14,25 +14,32 @@ const App = () => {
     const [movies, setMovies] = useState([]);
     const [searchHistory, setSearchHistory] = useState([]);
 
+    const containerStyle = {
+        backgroundColor: 'black',
+    };
+
     return (
         <>
-            <Router>
-                <MenuBar/>
-                <section className="h-100 h-custom" style={{backgroundColor: "#eee", minHeight: '100%'}}>
-                    <MDBContainer className="py-5 h-100">
-                        <Routes>
-                            <Route path="/" element={<Search movies={movies} setMovies={setMovies}
-                                                             searchHistory={searchHistory}
-                                                             setSearchHistory={setSearchHistory}/>}/>
-                            <Route path="/cart" element={<ShoppingCart movies={movies} setMovies={setMovies}/>}/>
-                            <Route path="/search" element={<Search movies={movies} setMovies={setMovies}
-                                                                   searchHistory={searchHistory}
-                                                                   setSearchHistory={setSearchHistory}/>}/>
-                            <Route path="/checkout" element={<Checkout movies={movies} setMovies={setMovies}/>}/>
-                        </Routes>
-                    </MDBContainer>
-                </section>
-            </Router>
+            <div style={containerStyle}>
+
+                <Router>
+                    <MenuBar/>
+                    <section className="h-100 h-custom  dark-red-background " style={{minHeight: '100%'}}>
+                        <MDBContainer className="py-5 h-100 ">
+                            <Routes>
+                                <Route path="/" element={<Search movies={movies} setMovies={setMovies}
+                                                                 searchHistory={searchHistory}
+                                                                 setSearchHistory={setSearchHistory}/>}/>
+                                <Route path="/cart" element={<ShoppingCart movies={movies} setMovies={setMovies}/>}/>
+                                <Route path="/search" element={<Search movies={movies} setMovies={setMovies}
+                                                                       searchHistory={searchHistory}
+                                                                       setSearchHistory={setSearchHistory}/>}/>
+                                <Route path="/checkout" element={<Checkout movies={movies} setMovies={setMovies}/>}/>
+                            </Routes>
+                        </MDBContainer>
+                    </section>
+                </Router>
+            </div>
         </>
 
     );
