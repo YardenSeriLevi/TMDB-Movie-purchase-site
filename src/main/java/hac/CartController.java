@@ -10,12 +10,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/cart")
 public class CartController {
-    private final Cart cart;
 
     @Autowired
-    public CartController(Cart cart) {
-        this.cart = cart;
-    }
+    private Cart cart;
+
 
     @PostMapping("/add")
     public void addToCart(@RequestBody Movie movieDetails) {

@@ -1,28 +1,49 @@
-import React from 'react';
-import FormFetchWithHook from "./component/SearchPage";
+import React, {useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import MenuBar from "./component/ManuBar";
 import Search from "./component/SearchPage";
-import Cart from "./component/ShoppingCart";
 import Checkout from "./component/CheckoutPage";
 import './index.css'; // Import the CSS file
-import { Link, Outlet } from 'react-router-dom';
-import QuantityEdit from "./component/ShoppingCart";
+import {Link, Outlet} from 'react-router-dom';
+import {MDBContainer} from "mdb-react-ui-kit";
+import fetchMovies from "./hooks/fetchMovies";
+import ShoppingCart from "./component/ShoppingCart";
+
 const App = () => {
+
+    const [movies, setMovies] = useState([]);
+    const [searchHistory, setSearchHistory] = useState([]);
+
+    const containerStyle = {
+        backgroundColor: 'black',
+    };
+
     return (
         <>
-            <Router>
-                <MenuBar/>
-                <Routes>
-                    <Route path="/" element={<Search/>}/>
-                    <Route path="/cart" element={<Cart/>}/>
-                    <Route path="/search" element={<Search/>}/>
-                    <Route path="/checkout" element={<Checkout/>}/>
-                </Routes>
-            </Router>
+            <div style={containerStyle}>
+
+                <Router>
+                    <MenuBar/>
+                    <section className="h-100 h-custom  dark-red-background " style={{minHeight: '100%'}}>
+                        <MDBContainer className="py-5 h-100 ">
+                            <Routes>
+                                <Route path="/" element={<Search movies={movies} setMovies={setMovies}
+                                                                 searchHistory={searchHistory}
+                                                                 setSearchHistory={setSearchHistory}/>}/>
+                                <Route path="/cart" element={<ShoppingCart movies={movies} setMovies={setMovies}/>}/>
+                                <Route path="/search" element={<Search movies={movies} setMovies={setMovies}
+                                                                       searchHistory={searchHistory}
+                                                                       setSearchHistory={setSearchHistory}/>}/>
+                                <Route path="/checkout" element={<Checkout movies={movies} setMovies={setMovies}/>}/>
+                            </Routes>
+                        </MDBContainer>
+                    </section>
+                </Router>
+            </div>
         </>
 
     );
 };
 
 export default App;
+
