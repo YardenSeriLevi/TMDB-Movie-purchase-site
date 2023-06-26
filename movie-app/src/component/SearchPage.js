@@ -110,10 +110,10 @@ const SearchPage = ({movies, setMovies, searchHistory, setSearchHistory}) => {
                         />
                     </Col>
                     <Col xs={3} className="d-flex align-items-center">
-                        <Button type="submit">Search</Button>
+                        <Button type="submit" variant="outline-light">Search</Button>{' '}
                     </Col>
                     <Col xs={2} className="d-flex align-items-center">
-                        <Button variant="primary" onClick={handleShow} className="me-2">
+                        <Button variant="light" onClick={handleShow} className="me-2">
                             Search History
                         </Button>
                         <Offcanvas placement="end" show={show} onHide={handleClose}>
@@ -171,36 +171,38 @@ const SearchPage = ({movies, setMovies, searchHistory, setSearchHistory}) => {
             {/*    className="card-registration card-registration-2  "*/}
             {/*    style={{borderRadius: "15px"}}*/}
             {/*>*/}
-                <Row>
-                    <Col sm={6}>
-                        {!genresError && <GenreDropdown genres={genres} handleGenreClick={handleSearch}/>}
-                        {genresError && <Alert variant="danger">{GENRESERROR}</Alert>}
-                    </Col>
-                </Row>
-                <p/>
-                <Row>
-                    <Col sm={6}>
-                        {searchError && <Alert variant="danger">{SEARCHERROR}</Alert>}
-                    </Col>
-                </Row>
+            <Row>
+                <Col sm={6}>
+                    {!genresError && <GenreDropdown genres={genres} handleGenreClick={handleSearch}/>}
+                    {genresError && <Alert variant="danger">{GENRESERROR}</Alert>}
+                </Col>
+            </Row>
+            <p/>
+            <Row>
+                <Col sm={6}>
+                    {searchError && <Alert variant="danger">{SEARCHERROR}</Alert>}
+                </Col>
+            </Row>
 
-                {serverError && <div className="text-danger">{SERVERERROR}</div>}
+            {serverError && <div className="text-danger">{SERVERERROR}</div>}
 
-                <div id="page_1" className="page_wrapper">
-                    {isLoading ? (
-                        <div>Loading...</div>
-                    ) : searchResults ? (
-                        <Row>
-                            {searchResults.map((result) => (
-                                <Col key={result.id} sm={3} md={3} className="mb-5 ">
+            <div id="page_1" className="page_wrapper">
+                {isLoading ? (
+                    <div>Loading...</div>
+                ) : searchResults ? (
+                    <Row>
+                        {searchResults.map((result) => (
+                            <Col key={result.id} sm={3} md={3} className="mb-5 ">
+                                <div style={{backgroundColor: 'transparent'}}>
                                     <MovieItems movie={result} movies={movies} setMovies={setMovies}/>
-                                </Col>
-                            ))}
-                        </Row>
-                    ) : (
-                        <div>No search results found.</div>
-                    )}
-                </div>
+                                </div>
+                            </Col>
+                        ))}
+                    </Row>
+                ) : (
+                    <div>No search results found.</div>
+                )}
+            </div>
             {/*</MDBCard>*/}
 
             {/*          <div className="year_column">*/}

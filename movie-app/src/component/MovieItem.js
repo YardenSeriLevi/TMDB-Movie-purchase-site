@@ -86,19 +86,6 @@ const MovieComponent = ({ movie, movies, setMovies }) => {
                             : `${(movie.title || movie.name).slice(0, 20)}...`}
                     </Card.Title>
                 </div>
-                {/*{((movie.title || movie.name).length > 20) ? (*/}
-                {/*    <div className="read-more-wrapper">*/}
-                {/*        <Button variant="link" onClick={toggleShowFullTitle}>*/}
-                {/*            {showFullTitle ? 'Read Less' : 'Read More'}*/}
-                {/*        </Button>*/}
-                {/*    </div>*/}
-                {/*) : (*/}
-                {/*    <>*/}
-                {/*        <br />*/}
-                {/*        <br />*/}
-                {/*    </>*/}
-                {/*)}*/}
-
                 <Card.Text variant="primary">Feedback {movie.vote_average}</Card.Text>
 
                 <div className="col 4">

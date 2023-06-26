@@ -8,7 +8,6 @@ import java.util.List;
 
 @Component
 @SessionScope
-
 public class Cart implements Serializable {
     private List<Movie> movies;
 
