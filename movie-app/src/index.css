@@ -6,7 +6,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /*background-color: black !important;*/
   background-size: cover;
   background-repeat: no-repeat
 }
@@ -17,7 +16,6 @@ code {
 }
 
 .navbar {
-  /*background-color: black;*/
   color: white;
   position: fixed;
   top: 0;
@@ -27,9 +25,7 @@ code {
 }
 
 .navbar-custom {
-  /*background-color: black;*/
   color: white;
-  /* Add any other custom styles for the navbar */
 }
 .custom-gray-div {
   background-color: gray;
@@ -40,7 +36,7 @@ code {
 }
 
 .clear-button {
-  height: 48px; /* Adjust the height value as needed */
+  height: 48px;
 }
 
 .cart-icon {
@@ -62,6 +58,7 @@ code {
   justify-content: center;
   align-items: center;
 }
-.dark-red-background {
-  background-color: #8B0000;
+
+body {
+  background-image: url("images/beck.jpg");
 }

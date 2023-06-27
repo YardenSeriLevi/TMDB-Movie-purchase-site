@@ -6,7 +6,6 @@ import MovieItems from "./MovieItem";
 import '..//index.css';
 import fetchMovies from "../hooks/fetchMovies";
 import {FaTrashAlt} from "react-icons/fa";
-import {MDBCard} from "mdb-react-ui-kit"; // Import the CSS file
 const API_KEY = '13f7a88e55dd111b7d108658b6b6216a';
 const GENRE_API_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
 const GENERAL_SEARCH_API_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&include_adult=false`;
@@ -19,7 +18,6 @@ const SearchPage = ({movies, setMovies, searchHistory, setSearchHistory}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [genresError, setGenresError] = useState(false);
     const [searchError, setSearchError] = useState(false);
-    //const [searchHistory, setSearchHistory] = useState([]);
     const [serverError, setServerError] = useState(false);
     const [show, setShow] = useState(false);
 
@@ -166,11 +164,6 @@ const SearchPage = ({movies, setMovies, searchHistory, setSearchHistory}) => {
             </Form>
 
             <p/>
-
-            {/*<MDBCard*/}
-            {/*    className="card-registration card-registration-2  "*/}
-            {/*    style={{borderRadius: "15px"}}*/}
-            {/*>*/}
             <Row>
                 <Col sm={6}>
                     {!genresError && <GenreDropdown genres={genres} handleGenreClick={handleSearch}/>}
@@ -203,32 +196,6 @@ const SearchPage = ({movies, setMovies, searchHistory, setSearchHistory}) => {
                     <div>No search results found.</div>
                 )}
             </div>
-            {/*</MDBCard>*/}
-
-            {/*          <div className="year_column">*/}
-            {/*              <span className="col_1 font_size_1">from</span>*/}
-            {/*              <span className="k-widget k-datepicker font_size_1" style={{ width: '100%' }}>*/}
-            {/*  <span className="k-picker-wrap k-state-default">*/}
-            {/*    <input*/}
-            {/*        id="release_date_gte"*/}
-            {/*        className="font_size_1 k-input"*/}
-            {/*        value=""*/}
-            {/*        style={{ width: '100%' }}*/}
-            {/*        data-role="datepicker"*/}
-            {/*        type="text"*/}
-            {/*        role="combobox"*/}
-            {/*        aria-expanded="false"*/}
-            {/*        aria-owns="release_date_gte_dateview"*/}
-            {/*        autoComplete="off"*/}
-            {/*        data-aria-disabled="false"*/}
-            {/*        data-aria-activedescendant="i8636344-b0f4-478f-9621-54c3824b4371_cell_selected"*/}
-            {/*    />*/}
-            {/*    <span unselectable="on" className="k-select" aria-label="select" role="button" aria-controls="release_date_gte_dateview">*/}
-            {/*      <span className="k-icon k-i-calendar"></span>*/}
-            {/*    </span>*/}
-            {/*  </span>*/}
-            {/*</span>*/}
-            {/*          </div>*/}
         </>
     );
 };

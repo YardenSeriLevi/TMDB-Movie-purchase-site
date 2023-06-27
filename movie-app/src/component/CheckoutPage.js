@@ -11,10 +11,15 @@ function CheckoutPage({movies, setMovies}) {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [validated, setValidated] = useState(false);
+    const [purchaseError, setPurchaseError] = useState(false);
+
+    const PURCHASEERROR = "Failed to complete the purchase please try again later";
 
     fetchMovies(setMovies);
 
     const handleSubmit = async (event) => {
+        setPurchaseError(false);
+
         event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity()) {
@@ -29,14 +34,25 @@ function CheckoutPage({movies, setMovies}) {
                 };
                 await axios.post('/purchases/add', purchaseData); // Send the data to the server
                 console.log('Purchase data sent successfully!');
-                setMovies([]);
-                window.location.replace('/'); // Navigate to the root page ("/") without adding to history
+                clearCart();
             } catch (error) {
-                console.error('Error sending purchase data:', error);
+                setPurchaseError(true);
             }
         }
         setValidated(true);
     };
+
+    const clearCart = async () => {
+        try {
+            await axios.delete('/cart/clear');
+            console.log("Cart cleared successfully");
+            setMovies([]);
+            window.location.replace('/'); // Navigate to the root page ("/") without adding to history
+        } catch
+            (error) {
+            setPurchaseError(true);
+        }
+    }
 
     const calculateTotalPrice = () => {
         let total = 0;
@@ -49,7 +65,8 @@ function CheckoutPage({movies, setMovies}) {
 
 
     return (
-        <Container className="d-flex justify-content-center align-items-center">
+        <Container className="d-flex justify-content-center align-items-center text-center">
+
             {movies.length > 0 ? (
                 <div style={{maxWidth: '400px'}}>
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -98,15 +115,20 @@ function CheckoutPage({movies, setMovies}) {
                             <MovieTotal movies={movies}/>
                         </div>
 
-                        <Button variant="primary" type="submit" className="mb-4" block="true">
+                        <Button variant="light" type="submit" className="mb-4" block="true">
                             Sign in
                         </Button>
+                        {purchaseError &&
+                            <h4 className="text-white">
+                                {PURCHASEERROR}
+                            </h4>}
                     </Form>
                 </div>
             ) : (
                 <div className="text-white">
                     <Empty/>
                 </div>
+
             )}
         </Container>
     );

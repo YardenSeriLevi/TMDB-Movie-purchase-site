@@ -10,21 +10,6 @@ const GenreDropdown = ({ genres, handleGenreClick }) => {
     };
 
     return (
-        // <div role="menu" className="sub-menu theme-lakira" style={{ opacity: 1, transitionDuration: '150ms' }}>
-        //     <ul className="sub-menu-list multi-column">
-        //         <li>
-        //             {selectedGenre && (
-        //                 <ul>
-        //                     {genres.map((genre) => (
-        //                         <li key={genre.id} onClick={(event) => handleGenreItemClick(event, genre)}>
-        //                             {genre.name}
-        //                         </li>
-        //                     ))}
-        //                 </ul>
-        //             )}
-        //         </li>
-        //     </ul>
-        // </div>
         <Dropdown>
             <Dropdown.Toggle variant="secondary">
                 {selectedGenre ? selectedGenre.name : 'Genres'}

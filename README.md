@@ -2,13 +2,19 @@
 
 # Authors
 
+* Yarden Seri Levi , Email:yardenco@edu.hac.ac.il
+
+* Anael Mizrahi ,Email: anaelmi@edu.hac.ac.il
+
 # Explanations
+
+    The way to choose movies with us is on the search bar, where you can choose a movie by the name of the movie or the name
+    of an actor and in addition you can choose movies by choosing a genre
 
     In case the movie does not have an image,we chose to display a defult image that is under the images folder and name
     defult pic.
 
-    The way to choose movies with us is on the search bar, where you can choose a movie by the name of the movie or the name
-    of an actor and in addition you can choose movies by choosing a genre
+   
 
 ---------------------
 

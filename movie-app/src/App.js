@@ -23,8 +23,8 @@ const App = () => {
             <div style={containerStyle}>
 
                 <Router>
-                    <MenuBar/>
-                    <section className="h-100 h-custom  dark-red-background " style={{minHeight: '100%'}}>
+                    <MenuBar movies ={movies}/>
+                    <section className="h-100 h-custom " style={{minHeight: '100%'}}>
                         <MDBContainer className="py-5 h-100 ">
                             <Routes>
                                 <Route path="/" element={<Search movies={movies} setMovies={setMovies}
