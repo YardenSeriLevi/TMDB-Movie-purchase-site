@@ -2,9 +2,9 @@
 
 # Authors
 
-* Yarden Seri Levi , Email:yardenco@edu.hac.ac.il
+* Yarden Seri Levi 
 
-* Anael Mizrahi ,Email: anaelmi@edu.hac.ac.il
+* Anael Mizrahi 
 
 # Explanations
 
@@ -13,9 +13,6 @@
 
     In case the movie does not have an image,we chose to display a defult image that is under the images folder and name
     defult pic.
-
-   
-
 ---------------------
 
 # Initializing the template
@@ -56,7 +53,3 @@ When you develop your own controller, you must declare the repository member exa
 DebugController class.
 Then you can use it to store purchases in the DB (repository.save(purchase)).
 
-
-## Important:
-To work with this project, you need to add a constant named: API_KEY in the search page component
-that will be a key you will receive from the TMDB API
