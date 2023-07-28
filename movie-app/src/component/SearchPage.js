@@ -6,7 +6,7 @@ import MovieItems from "./MovieItem";
 import '..//index.css';
 import fetchMovies from "../hooks/fetchMovies";
 import {FaTrashAlt} from "react-icons/fa";
-const API_KEY = '13f7a88e55dd111b7d108658b6b6216a';
+const API_KEY = 'Key that you have obtained from TMDB API';
 const GENRE_API_URL = `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`;
 const GENERAL_SEARCH_API_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&include_adult=false`;
 const SEARCH_BY_GENRE = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false`;
@@ -19,6 +19,7 @@ const SearchPage = ({movies, setMovies, searchHistory, setSearchHistory}) => {
     const [genresError, setGenresError] = useState(false);
     const [searchError, setSearchError] = useState(false);
     const [serverError, setServerError] = useState(false);
+    const [emptyField, setEmptyField] = useState(false);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -61,6 +62,8 @@ const SearchPage = ({movies, setMovies, searchHistory, setSearchHistory}) => {
         }
         setIsLoading(true);
         setSearchError(false);
+
+
 
         try {
             let apiUrl;

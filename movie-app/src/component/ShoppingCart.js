@@ -28,11 +28,7 @@ const ShoppingCart = ({movies, setMovies}) => {
             const updatedMovies = movies.filter(movie => movie.id !== movieId);
             setMovies(updatedMovies);
         } catch (error) {
-            console.log("Error deleting movie:", error);
-            // Handle error cases
-            // Find the movie with the matching movieId
             const errorMovie = movies.find(movie => movie.id === movieId);
-            // Update the error message for that movie
             errorMovie.errorMessage = "The deletion operation could not be completed at the moment. Please try again later."
             setMovies([...movies]);
         }
@@ -40,15 +36,12 @@ const ShoppingCart = ({movies, setMovies}) => {
 
 
     const handleClearCart = async () => {
+        setError(null);
         try {
             await axios.delete('/cart/clear');
-            console.log("Cart cleared successfully");
-            // Update the list of movies to an empty array
             setMovies([]);
         } catch (error) {
             console.log("Error clearing cart:", error);
-            // Handle error cases
-            setError("Failed to clear the cart. Please try again later.");
         }
     };
 

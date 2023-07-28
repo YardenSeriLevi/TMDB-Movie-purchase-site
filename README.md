@@ -56,4 +56,7 @@ When you develop your own controller, you must declare the repository member exa
 DebugController class.
 Then you can use it to store purchases in the DB (repository.save(purchase)).
 
-## Still have problems? Come to class.
+
+## Important:
+To work with this project, you need to add a constant named: API_KEY in the search page component
+that will be a key you will receive from the TMDB API
